@@ -12,7 +12,7 @@ public class Bloco {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 30)
+    @Column(name = "identificacao", nullable = false, length = 10, unique = true)
     private String identificacao;
 
     protected Bloco(){
