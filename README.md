@@ -274,7 +274,7 @@ Disponibilizar o primeiro endpoint REST da aplicação.
 ### Principais aprendizados
 
 - Fluxo de uma requisição HTTP no Spring Boot.
-- DispatcherServlet.
+- DispatcherServlet. (Responsável por entender o que vem do cliente e passar para o controller)
 - DTOs utilizando record.
 - Bean Validation.
 - ResponseEntity.
