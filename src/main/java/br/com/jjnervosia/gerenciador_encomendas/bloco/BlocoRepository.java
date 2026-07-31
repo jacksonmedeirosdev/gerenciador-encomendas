@@ -1,4 +1,4 @@
-package br.com.jjnervosia.gerenciador_encomendas.Bloco;
+package br.com.jjnervosia.gerenciador_encomendas.bloco;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

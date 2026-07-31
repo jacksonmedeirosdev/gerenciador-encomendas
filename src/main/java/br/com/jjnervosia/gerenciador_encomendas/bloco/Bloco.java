@@ -1,4 +1,4 @@
-package br.com.jjnervosia.gerenciador_encomendas.Bloco;
+package br.com.jjnervosia.gerenciador_encomendas.bloco;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,7 +11,6 @@ public class Bloco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Column(name = "identificacao", nullable = false, length = 10, unique = true)
     private String identificacao;
 

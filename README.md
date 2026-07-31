@@ -38,7 +38,10 @@ O projeto utiliza arquitetura em camadas, organizada por domínio.
 src/main/java/br/com/jjnervosia/gerenciador_encomendas
 
 bloco/
+├── dto/
+│   └── CadastrarBlocoDTO.java
 ├── Bloco.java
+├── BlocoController.java
 ├── BlocoRepository.java
 └── BlocoService.java
 
@@ -137,28 +140,70 @@ Versionamento:
 
 ---
 
-## Sprint 3 (Em andamento)
+## Sprint 3 — API REST ✅
 
-- [ ] BlocoController
-- [ ] Primeiros endpoints REST
-- [ ] Testes utilizando Postman
+- [x] BlocoController
+- [x] DTO de cadastro
+- [x] Bean Validation
+- [x] Endpoint POST /blocos
+- [x] Testes utilizando Postman
+- [x] ResponseEntity (201 Created)
 
 ---
 
 ## Próximas Sprints
 
-- [ ] DTOs
 - [ ] Apartamentos
 - [ ] Moradores
 - [ ] Encomendas
 - [ ] Histórico de Encomendas
 - [ ] Tratamento global de exceções
-- [ ] Validações Bean Validation
 - [ ] Swagger / OpenAPI
 - [ ] Docker
 - [ ] Autenticação
 - [ ] Deploy
 
+---
+
+# 🚀 Roadmap Funcional
+
+## Blocos
+
+- [x] Cadastro
+- [ ] Consulta por ID
+- [ ] Listagem
+- [ ] Atualização
+- [ ] Exclusão
+
+## Apartamentos
+
+- [ ] Cadastro
+- [ ] Consulta
+- [ ] Atualização
+- [ ] Exclusão
+
+## Moradores
+
+- [ ] Cadastro
+- [ ] Consulta
+- [ ] Atualização
+- [ ] Exclusão
+
+## Encomendas
+
+- [ ] Cadastro
+- [ ] Recebimento
+- [ ] Retirada
+- [ ] Histórico
+
+## Funcionalidades Futuras
+
+- [ ] QR Code para retirada
+- [ ] Dashboard administrativo
+- [ ] Múltiplos condomínios
+- [ ] Docker
+- [ ] Swagger
+- [ ] Deploy
 ---
 
 # 📚 Journal de Desenvolvimento
@@ -211,18 +256,29 @@ Implementar a primeira camada de regras de negócio.
 
 ---
 
-# 🚀 Próximas Funcionalidades
+## Sprint 3
 
-O projeto continuará evoluindo para contemplar:
+### Objetivos
 
-- Cadastro de Blocos
-- Cadastro de Apartamentos
-- Cadastro de Moradores
-- Cadastro de Encomendas
-- Histórico completo das movimentações
-- QR Code para retirada de encomendas
-- Dashboard administrativo
-- Suporte a múltiplos condomínios
+Disponibilizar o primeiro endpoint REST da aplicação.
+
+### Entregas
+
+- Criação da BlocoController.
+- Implementação do DTO de cadastro.
+- Bean Validation.
+- Endpoint POST /blocos.
+- ResponseEntity com HTTP 201.
+- Testes utilizando Postman.
+
+### Principais aprendizados
+
+- Fluxo de uma requisição HTTP no Spring Boot.
+- DispatcherServlet.
+- DTOs utilizando record.
+- Bean Validation.
+- ResponseEntity.
+- Diferença entre 200 OK e 201 Created.
 
 ---
 
