@@ -150,6 +150,15 @@ Versionamento:
 - [x] ResponseEntity (201 Created)
 
 ---
+## Sprint 4 — Tratamento de Erros ✅
+
+- [x] BlocoJaExisteException
+- [x] GlobalExceptionHandler
+- [x] ApiError
+- [x] CampoErro
+- [x] Tratamento HTTP 409
+- [x] Tratamento HTTP 400
+- [x] Testes no Postman
 
 ## Próximas Sprints
 
@@ -157,7 +166,6 @@ Versionamento:
 - [ ] Moradores
 - [ ] Encomendas
 - [ ] Histórico de Encomendas
-- [ ] Tratamento global de exceções
 - [ ] Swagger / OpenAPI
 - [ ] Docker
 - [ ] Autenticação
@@ -281,6 +289,33 @@ Disponibilizar o primeiro endpoint REST da aplicação.
 - Diferença entre 200 OK e 201 Created.
 
 ---
+## Sprint 4
+
+### Objetivos
+
+Padronizar o tratamento de erros da API e fornecer respostas consistentes para regras de negócio e validações.
+
+### Entregas
+
+- Criação da BlocoJaExisteException.
+- Criação da GlobalExceptionHandler.
+- Padronização das respostas de erro utilizando ApiError.
+- Implementação do CampoErro para detalhamento das validações.
+- Tratamento das exceções de domínio (HTTP 409 Conflict).
+- Tratamento do Bean Validation (HTTP 400 Bad Request).
+- Testes realizados via Postman.
+
+### Principais aprendizados
+
+- Diferença entre exceções de domínio e exceções de infraestrutura.
+- Criação de exceções customizadas.
+- Funcionamento do @RestControllerAdvice.
+- Uso do @ExceptionHandler.
+- Construção de respostas HTTP padronizadas.
+- Bean Validation e MethodArgumentNotValidException.
+- Collections (List e ArrayList).
+- Enhanced for (for-each).
+- Programar para interfaces, não para implementações.
 
 # 👨‍💻 Autor
 
