@@ -14,9 +14,11 @@ public class BlocoService {
     }
 
     public void cadastrar(String identificacao){
-        Bloco bloco = new Bloco(identificacao);
+        String identificacaoNormalizada = identificacao.trim().toUpperCase();
+        Bloco bloco = new Bloco(identificacaoNormalizada);
+
         if (repository.existsByIdentificacao(bloco.getIdentificacao())) {
-            throw new BlocoJaExisteException(identificacao);
+            throw new BlocoJaExisteException(identificacaoNormalizada);
         }
         repository.save(bloco);
     }

@@ -317,6 +317,13 @@ Padronizar o tratamento de erros da API e fornecer respostas consistentes para r
 - Enhanced for (for-each).
 - Programar para interfaces, não para implementações.
 
+
+---
+## Backlog Técnico
+
+- [ ] Centralizar normalização de textos (trim + uppercase) para evitar duplicação entre Services.
+---
+
 # 👨‍💻 Autor
 
 **Jackson Medeiros**
