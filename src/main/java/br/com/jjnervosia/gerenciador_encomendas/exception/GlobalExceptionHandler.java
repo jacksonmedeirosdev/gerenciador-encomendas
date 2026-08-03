@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -65,4 +66,28 @@ public class GlobalExceptionHandler {
                 .body(erro);
 
     }
+
+   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public ResponseEntity<ApiError> tratarMetodoHttpNaoSuportado(
+            HttpRequestMethodNotSupportedException exception,
+            HttpServletRequest request
+   ){
+        HttpStatus status = HttpStatus.METHOD_NOT_ALLOWED;
+        ApiError erro = new ApiError(
+                status.value(),
+                status.getReasonPhrase(),
+                "O endpoint '"
+                        + request.getRequestURI() +
+                        "' não suporta o método HTTP "
+                        + exception.getMethod() + ".",
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                List.of()
+        );
+
+        return ResponseEntity
+                .status(status)
+                .body(erro);
+    };
+
 }
