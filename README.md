@@ -40,6 +40,7 @@ src/main/java/br/com/jjnervosia/gerenciador_encomendas
 bloco/
 ├── dto/
 │   └── CadastrarBlocoDTO.java
+    └── BlocoResponseDTO.java
 ├── Bloco.java
 ├── BlocoController.java
 ├── BlocoRepository.java
@@ -169,6 +170,16 @@ Versionamento:
 - [x] Tratamento HTTP 409
 - [x] Testes no Postman
 
+---
+## Sprint 5 — Consulta de Blocos (Em andamento)
+
+- [x] BlocoResponseDTO
+- [x] Endpoint GET /bloco
+- [x] Conversão Entity → DTO
+- [x] Testes utilizando Postman
+- [ ] Consulta por ID
+
+---
 ## Próximas Sprints
 
 - [ ] Apartamentos
@@ -187,8 +198,8 @@ Versionamento:
 ## Blocos
 
 - [x] Cadastro
+- [x] Listagem
 - [ ] Consulta por ID
-- [ ] Listagem
 - [ ] Atualização
 - [ ] Exclusão
 
