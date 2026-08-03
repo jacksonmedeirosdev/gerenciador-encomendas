@@ -45,6 +45,13 @@ bloco/
 ├── BlocoRepository.java
 └── BlocoService.java
 
+exception/
+├──ApiError.java
+├──BlocoJaExiste.java
+├──BlocoError.java
+├──CampoErro.java
+├──GlobalExceprionApplication.java
+
 apartamento/
 morador/
 encomenda/
@@ -156,8 +163,10 @@ Versionamento:
 - [x] GlobalExceptionHandler
 - [x] ApiError
 - [x] CampoErro
-- [x] Tratamento HTTP 409
 - [x] Tratamento HTTP 400
+- [x] Tratamento HTTP 404
+- [x] Tratamento HTTP 405
+- [x] Tratamento HTTP 409
 - [x] Testes no Postman
 
 ## Próximas Sprints
@@ -303,6 +312,7 @@ Padronizar o tratamento de erros da API e fornecer respostas consistentes para r
 - Implementação do CampoErro para detalhamento das validações.
 - Tratamento das exceções de domínio (HTTP 409 Conflict).
 - Tratamento do Bean Validation (HTTP 400 Bad Request).
+- Tratamento de Method Not Allowed (HTTP 404 e 405)
 - Testes realizados via Postman.
 
 ### Principais aprendizados
