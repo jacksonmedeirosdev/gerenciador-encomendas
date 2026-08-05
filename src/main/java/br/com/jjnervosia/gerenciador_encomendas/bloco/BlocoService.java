@@ -2,6 +2,7 @@ package br.com.jjnervosia.gerenciador_encomendas.bloco;
 
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.BlocoResponseDTO;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoJaExisteException;
+import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoNaoEncontradoException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -40,5 +41,14 @@ public class BlocoService {
         }
 
         return blocosResponse;
+    }
+    public BlocoResponseDTO buscarPorId(Long id){
+
+        Bloco bloco = repository.findById(id).orElseThrow(() ->  new BlocoNaoEncontradoException(id));
+
+        return new BlocoResponseDTO(
+                bloco.getId(),
+                bloco.getIdentificacao());
+
     }
 }

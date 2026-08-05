@@ -8,6 +8,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -31,9 +33,28 @@ public class GlobalExceptionHandler {
                 exception.getMessage(),
                 request.getRequestURI(),
                 LocalDateTime.now(),
-                null
+                List.of()
         );
 
+        return ResponseEntity
+                .status(status)
+                .body(erro);
+    }
+
+    @ExceptionHandler(BlocoNaoEncontradoException.class)
+    public ResponseEntity<ApiError> tratarBlocoNaoEncontrado(
+            BlocoNaoEncontradoException exception,
+            HttpServletRequest request
+    ){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ApiError erro = new ApiError(
+                status.value(),
+                status.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                List.of()
+        );
         return ResponseEntity
                 .status(status)
                 .body(erro);
@@ -90,4 +111,46 @@ public class GlobalExceptionHandler {
                 .body(erro);
     };
 
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public ResponseEntity<ApiError> tratarParametroInvalido(
+            MethodArgumentTypeMismatchException exception,
+            HttpServletRequest request
+     ){
+
+        String mensagem = "O parâmetro '" + exception.getName() + "' recebeu o valor '"+ exception.getValue() +"'," +
+                " mas deve ser um número inteiro.";
+        
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        ApiError erro = new ApiError(
+                status.value(),
+                status.getReasonPhrase(),
+                mensagem,
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                List.of()
+        );
+        
+        return ResponseEntity
+                .status(status)
+                .body(erro);
+    }
+
+    @ExceptionHandler(NoResourceFoundException.class)
+    public ResponseEntity<ApiError> tratarEndPointNaoEncontrado(
+            NoResourceFoundException exception,
+            HttpServletRequest request
+    ){
+        HttpStatus status = HttpStatus.NOT_FOUND;
+        ApiError erro = new ApiError(
+                status.value(),
+                status.getReasonPhrase(),
+                "O endpoint " + request.getRequestURI() + " não existe",
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                List.of()
+        );
+        return ResponseEntity
+                .status(status)
+                .body(erro);
+    }
 }

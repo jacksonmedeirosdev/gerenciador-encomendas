@@ -30,4 +30,11 @@ public class BlocoController {
         List<BlocoResponseDTO> listaBlocos = blocoService.listar();
         return ResponseEntity.status(HttpStatus.OK).body(listaBlocos);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<BlocoResponseDTO> buscaPorId(@PathVariable Long id) {
+
+        BlocoResponseDTO dto = blocoService.buscarPorId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(dto);
+    }
 }
