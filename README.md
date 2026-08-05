@@ -48,10 +48,11 @@ bloco/
 
 exception/
 ├──ApiError.java
-├──BlocoJaExiste.java
 ├──BlocoError.java
+├──BlocoJaExisteException.java
+├──BlocoNaoEncontradoException.java
 ├──CampoErro.java
-├──GlobalExceprionApplication.java
+├──GlobalExceptionHandler.java
 
 apartamento/
 morador/
@@ -103,7 +104,37 @@ Cada funcionalidade segue um fluxo semelhante ao encontrado em equipes de desenv
 6. Registro das decisões arquiteturais.
 
 ---
+# 📝 Convenção de Commits
 
+Este projeto segue uma convenção baseada em Conventional Commits para manter o histórico organizado e facilitar a leitura da evolução do sistema.
+
+| Tipo | Utilização |
+|------|------------|
+| feat | Nova funcionalidade |
+| fix | Correção de bugs |
+| docs | Alterações na documentação |
+| refactor | Refatoração sem alterar comportamento |
+| test | Inclusão ou alteração de testes |
+| style | Apenas formatação |
+| chore | Configurações e tarefas de manutenção |
+
+### Princípios adotados
+
+- Cada commit representa uma única intenção.
+- O histórico deve contar a evolução do projeto.
+- Commits pequenos e objetivos facilitam revisões e manutenção.
+
+### Exemplos
+
+feat(bloco): implementa consulta por id
+
+fix(api): corrige tratamento de exceção
+
+docs(readme): atualiza roadmap do projeto
+
+refactor(exception): reduz duplicação na criação do ApiError
+
+---
 # 📁 Banco de Dados
 
 Tecnologia utilizada:
@@ -171,13 +202,17 @@ Versionamento:
 - [x] Testes no Postman
 
 ---
-## Sprint 5 — Consulta de Blocos (Em andamento)
+## Sprint 5 — Consulta de Blocos ✅
 
 - [x] BlocoResponseDTO
 - [x] Endpoint GET /bloco
+- [x] Endpoint GET /bloco/{id}
 - [x] Conversão Entity → DTO
+- [x] Consulta utilizando Optional
+- [x] Tratamento de BlocoNaoEncontradoException
+- [x] Tratamento de MethodArgumentTypeMismatchException
+- [x] Tratamento de NoResourceFoundException
 - [x] Testes utilizando Postman
-- [ ] Consulta por ID
 
 ---
 ## Próximas Sprints
@@ -199,7 +234,7 @@ Versionamento:
 
 - [x] Cadastro
 - [x] Listagem
-- [ ] Consulta por ID
+- [x] Consulta por ID
 - [ ] Atualização
 - [ ] Exclusão
 
@@ -337,12 +372,43 @@ Padronizar o tratamento de erros da API e fornecer respostas consistentes para r
 - Collections (List e ArrayList).
 - Enhanced for (for-each).
 - Programar para interfaces, não para implementações.
+---
+## Sprint 5
 
+### Objetivos
+
+Disponibilizar consultas de blocos utilizando identificadores e consolidar a padronização das respostas da API.
+
+### Entregas
+
+- Implementação do endpoint GET /bloco.
+- Implementação do endpoint GET /bloco/{id}.
+- Criação do BlocoResponseDTO.
+- Conversão de Entity para DTO.
+- Utilização de Optional para busca por identificador.
+- Criação da BlocoNaoEncontradoException.
+- Tratamento das exceções:
+    - MethodArgumentTypeMismatchException.
+    - NoResourceFoundException.
+- Testes realizados via Postman.
+
+### Principais aprendizados
+
+- Optional.
+- orElseThrow().
+- Supplier.
+- Expressões Lambda.
+- @PathVariable.
+- Conversão automática de parâmetros pelo Spring.
+- Diferença entre recurso inexistente e endpoint inexistente.
+- Padronização das respostas de erro da API.
 
 ---
 ## Backlog Técnico
 
 - [ ] Centralizar normalização de textos (trim + uppercase) para evitar duplicação entre Services.
+- [ ] Centralizar a criação do ApiError para reduzir repetição no GlobalExceptionHandler.
+
 ---
 
 # 👨‍💻 Autor
