@@ -26,4 +26,8 @@ public class Bloco {
 
         this.identificacao = identificacao;
     }
+
+    public void alterarIdentificacao(String identificacao){
+        this.identificacao = identificacao;
+    }
 }

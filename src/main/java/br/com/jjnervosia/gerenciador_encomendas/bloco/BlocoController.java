@@ -1,6 +1,7 @@
 package br.com.jjnervosia.gerenciador_encomendas.bloco;
 
 
+import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.AtualizarBlocoDTO;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.BlocoResponseDTO;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.CadastrarBlocoDTO;
 import jakarta.validation.Valid;
@@ -12,7 +13,8 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/blocos")
-public class BlocoController {
+public class
+BlocoController {
 
     private final BlocoService blocoService;
     public BlocoController(BlocoService blocoService) {
@@ -23,6 +25,12 @@ public class BlocoController {
     public ResponseEntity<Void> cadastrar(@Valid @RequestBody  CadastrarBlocoDTO dto) {
         blocoService.cadastrar(dto.identificacao());
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<BlocoResponseDTO> atualizar( @Valid @RequestBody AtualizarBlocoDTO dto, @PathVariable Long id ) {
+        BlocoResponseDTO Responsedto = blocoService.atualizar(dto, id);
+        return ResponseEntity.status(HttpStatus.OK).body(Responsedto);
     }
 
     @GetMapping
