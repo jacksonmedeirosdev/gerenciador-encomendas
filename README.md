@@ -39,6 +39,7 @@ src/main/java/br/com/jjnervosia/gerenciador_encomendas
 
 bloco/
 ├── dto/
+    └── AtualizarBlocoDTO.java
 │   └── CadastrarBlocoDTO.java
     └── BlocoResponseDTO.java
 ├── Bloco.java
@@ -207,7 +208,10 @@ Versionamento:
 - [x] BlocoResponseDTO
 - [x] Endpoint GET /bloco
 - [x] Endpoint GET /bloco/{id}
+- [x] Endpoint PUT /blocos/{id}
 - [x] Conversão Entity → DTO
+- [x] AtualizarBlocoDTO
+- [x] Método de domínio para alteração
 - [x] Consulta utilizando Optional
 - [x] Tratamento de BlocoNaoEncontradoException
 - [x] Tratamento de MethodArgumentTypeMismatchException
@@ -235,7 +239,7 @@ Versionamento:
 - [x] Cadastro
 - [x] Listagem
 - [x] Consulta por ID
-- [ ] Atualização
+- [x] Atualização
 - [ ] Exclusão
 
 ## Apartamentos
@@ -377,32 +381,48 @@ Padronizar o tratamento de erros da API e fornecer respostas consistentes para r
 
 ### Objetivos
 
-Disponibilizar consultas de blocos utilizando identificadores e consolidar a padronização das respostas da API.
+Disponibilizar consultas e atualização de blocos, consolidando a padronização das respostas da API e aplicando regras de negócio durante a alteração de dados.
 
 ### Entregas
 
-- Implementação do endpoint GET /bloco.
-- Implementação do endpoint GET /bloco/{id}.
-- Criação do BlocoResponseDTO.
+- Implementação do endpoint `GET /bloco`.
+- Implementação do endpoint `GET /bloco/{id}`.
+- Implementação do endpoint `PUT /bloco/{id}`.
+- Criação do `BlocoResponseDTO`.
+- Criação do `AtualizarBlocoDTO`.
 - Conversão de Entity para DTO.
-- Utilização de Optional para busca por identificador.
-- Criação da BlocoNaoEncontradoException.
+- Utilização de `Optional` para busca por identificador.
+- Criação do método de domínio `alterarIdentificacao()`.
+- Implementação da regra de atualização com validação de duplicidade.
+- Criação da `BlocoNaoEncontradoException`.
 - Tratamento das exceções:
-    - MethodArgumentTypeMismatchException.
-    - NoResourceFoundException.
+  - `MethodArgumentTypeMismatchException`.
+  - `NoResourceFoundException`.
 - Testes realizados via Postman.
 
 ### Principais aprendizados
 
-- Optional.
-- orElseThrow().
-- Supplier.
+- `Optional`.
+- `orElseThrow()`.
+- `Supplier`.
 - Expressões Lambda.
-- @PathVariable.
+- `@PathVariable`.
 - Conversão automática de parâmetros pelo Spring.
+- Diferença entre `existsBy` e `findBy`.
+- Atualização de recursos utilizando `PUT`.
+- Métodos de domínio para proteger o estado da entidade.
+- Comparação entre objetos utilizando `equals()`.
+- Conversão de Entity para DTO.
 - Diferença entre recurso inexistente e endpoint inexistente.
 - Padronização das respostas de erro da API.
 
+### Principais decisões arquiteturais
+
+- Manter a camada **Service** responsável pelas regras de negócio da atualização.
+- Reutilizar exceções de domínio já existentes, evitando duplicação de código.
+- Utilizar métodos de domínio na entidade (`alterarIdentificacao`) em vez de expor setters públicos.
+- Retornar sempre `BlocoResponseDTO`, evitando expor diretamente a entidade.
+- Considerar a atualização do próprio registro como um caso válido, impedindo conflito apenas quando a identificação já pertence a outro bloco.
 ---
 ## Backlog Técnico
 
