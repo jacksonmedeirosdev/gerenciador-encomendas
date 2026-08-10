@@ -80,4 +80,10 @@ public class BlocoService {
 
 
     }
+
+    public void remover(Long id) {
+        Bloco blocoAtual = repository.findById(id).orElseThrow(() ->  new BlocoNaoEncontradoException(id));
+
+        repository.delete(blocoAtual);
+    }
 }

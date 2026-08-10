@@ -45,4 +45,11 @@ BlocoController {
         BlocoResponseDTO dto = blocoService.buscarPorId(id);
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> remover(@PathVariable Long id) {
+
+        blocoService.remover(id);
+        return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
 }
