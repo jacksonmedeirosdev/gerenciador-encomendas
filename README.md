@@ -203,12 +203,13 @@ Versionamento:
 - [x] Testes no Postman
 
 ---
-## Sprint 5 — Consulta de Blocos ✅
+## Sprint 5 — CRUD de Blocos ✅
 
 - [x] BlocoResponseDTO
 - [x] Endpoint GET /bloco
 - [x] Endpoint GET /bloco/{id}
-- [x] Endpoint PUT /blocos/{id}
+- [x] Endpoint PUT /bloco/{id}
+- [x] Endpoint DELETE /bloco/{id}
 - [x] Conversão Entity → DTO
 - [x] AtualizarBlocoDTO
 - [x] Método de domínio para alteração
@@ -217,7 +218,6 @@ Versionamento:
 - [x] Tratamento de MethodArgumentTypeMismatchException
 - [x] Tratamento de NoResourceFoundException
 - [x] Testes utilizando Postman
-
 ---
 ## Próximas Sprints
 
@@ -240,7 +240,7 @@ Versionamento:
 - [x] Listagem
 - [x] Consulta por ID
 - [x] Atualização
-- [ ] Exclusão
+- [x] Exclusão
 
 ## Apartamentos
 
@@ -388,13 +388,14 @@ Disponibilizar consultas e atualização de blocos, consolidando a padronizaçã
 - Implementação do endpoint `GET /bloco`.
 - Implementação do endpoint `GET /bloco/{id}`.
 - Implementação do endpoint `PUT /bloco/{id}`.
+- Implementação do endpoint `DELETE /bloco/{id}`.
 - Criação do `BlocoResponseDTO`.
 - Criação do `AtualizarBlocoDTO`.
 - Conversão de Entity para DTO.
 - Utilização de `Optional` para busca por identificador.
 - Criação do método de domínio `alterarIdentificacao()`.
 - Implementação da regra de atualização com validação de duplicidade.
-- Criação da `BlocoNaoEncontradoException`.
+- Reutilização da `BlocoNaoEncontradoException`.
 - Tratamento das exceções:
   - `MethodArgumentTypeMismatchException`.
   - `NoResourceFoundException`.
@@ -410,6 +411,7 @@ Disponibilizar consultas e atualização de blocos, consolidando a padronizaçã
 - Conversão automática de parâmetros pelo Spring.
 - Diferença entre `existsBy` e `findBy`.
 - Atualização de recursos utilizando `PUT`.
+- Exclusão de recursos utilizando `DELETE`.
 - Métodos de domínio para proteger o estado da entidade.
 - Comparação entre objetos utilizando `equals()`.
 - Conversão de Entity para DTO.
@@ -418,16 +420,19 @@ Disponibilizar consultas e atualização de blocos, consolidando a padronizaçã
 
 ### Principais decisões arquiteturais
 
-- Manter a camada **Service** responsável pelas regras de negócio da atualização.
-- Reutilizar exceções de domínio já existentes, evitando duplicação de código.
+- Manter a camada **Service** responsável pelas regras de negócio da atualização e exclusão.
+- Reutilizar exceções de domínio existentes, evitando duplicação de código.
 - Utilizar métodos de domínio na entidade (`alterarIdentificacao`) em vez de expor setters públicos.
 - Retornar sempre `BlocoResponseDTO`, evitando expor diretamente a entidade.
 - Considerar a atualização do próprio registro como um caso válido, impedindo conflito apenas quando a identificação já pertence a outro bloco.
+- Validar previamente a existência do recurso antes da exclusão, mantendo respostas HTTP padronizadas.
+
 ---
 ## Backlog Técnico
 
 - [ ] Centralizar normalização de textos (trim + uppercase) para evitar duplicação entre Services.
 - [ ] Centralizar a criação do ApiError para reduzir repetição no GlobalExceptionHandler.
+- [ ] Impedir exclusão de blocos que possuam apartamentos vinculados.
 
 ---
 
