@@ -60,6 +60,27 @@ public class GlobalExceptionHandler {
                 .body(erro);
     }
 
+    @ExceptionHandler(ApartamentoJaExisteNoBlocoException.class)
+    public ResponseEntity<ApiError> tratarApartamentoJaExiste(
+            ApartamentoJaExisteNoBlocoException exception,
+            HttpServletRequest request
+    ){
+        HttpStatus status = HttpStatus.CONFLICT;
+        ApiError erro = new ApiError(
+                status.value(),
+                status.getReasonPhrase(),
+                exception.getMessage(),
+                request.getRequestURI(),
+                LocalDateTime.now(),
+                List.of()
+        );
+
+        return ResponseEntity
+                .status(status)
+                .body(erro);
+
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> tratarErroValidacao(
             MethodArgumentNotValidException exception,

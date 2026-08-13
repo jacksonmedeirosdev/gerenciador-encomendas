@@ -4,8 +4,6 @@ import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.AtualizarBlocoDTO;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.BlocoResponseDTO;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoJaExisteException;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoNaoEncontradoException;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

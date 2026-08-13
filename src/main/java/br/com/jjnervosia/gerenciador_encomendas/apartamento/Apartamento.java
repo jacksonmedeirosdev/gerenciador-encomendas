@@ -1,0 +1,37 @@
+package br.com.jjnervosia.gerenciador_encomendas.apartamento;
+
+import br.com.jjnervosia.gerenciador_encomendas.bloco.Bloco;
+import jakarta.persistence.*;
+import lombok.Getter;
+
+@Entity
+@Table
+@Getter
+public class Apartamento {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name= "numero",  nullable = false,  length = 10)
+    private String numero;
+
+    //LAZY: o bloco é carregado sob demanda pelo JPA.
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Bloco bloco;
+
+    protected  Apartamento(){
+    }
+    public Apartamento(String numero, Bloco bloco){
+
+        if (numero == null || numero.isBlank()){
+            throw new IllegalArgumentException("O número do apartamento é obrigatória.");
+        }
+        if (bloco == null){
+            throw new IllegalArgumentException("O bloco é obrigatória para cadastrar o apartamento.");
+        }
+
+        this.numero = numero;
+        this.bloco = bloco;
+    }
+
+}

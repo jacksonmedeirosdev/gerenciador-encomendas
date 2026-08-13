@@ -29,8 +29,8 @@ BlocoController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BlocoResponseDTO> atualizar( @Valid @RequestBody AtualizarBlocoDTO dto, @PathVariable Long id ) {
-        BlocoResponseDTO Responsedto = blocoService.atualizar(dto, id);
-        return ResponseEntity.status(HttpStatus.OK).body(Responsedto);
+        BlocoResponseDTO ResponseDto = blocoService.atualizar(dto, id);
+        return ResponseEntity.status(HttpStatus.OK).body(ResponseDto);
     }
 
     @GetMapping
