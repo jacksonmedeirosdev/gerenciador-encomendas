@@ -39,23 +39,31 @@ src/main/java/br/com/jjnervosia/gerenciador_encomendas
 
 bloco/
 ├── dto/
-    └── AtualizarBlocoDTO.java
-│   └── CadastrarBlocoDTO.java
-    └── BlocoResponseDTO.java
+│   ├── AtualizarBlocoDTO.java
+│   ├── CadastrarBlocoDTO.java
+│   └── BlocoResponseDTO.java
 ├── Bloco.java
 ├── BlocoController.java
 ├── BlocoRepository.java
 └── BlocoService.java
 
-exception/
-├──ApiError.java
-├──BlocoError.java
-├──BlocoJaExisteException.java
-├──BlocoNaoEncontradoException.java
-├──CampoErro.java
-├──GlobalExceptionHandler.java
-
 apartamento/
+├── dto/
+│   ├── CadastrarApartamentoDTO.java
+│   └── ApartamentoResponseDTO.java
+├── Apartamento.java
+├── ApartamentoController.java
+├── ApartamentoRepository.java
+└── ApartamentoService.java
+
+exception/
+├── ApiError.java
+├── ApartamentoJaExisteNoBlocoException.java
+├── BlocoJaExisteException.java
+├── BlocoNaoEncontradoException.java
+├── CampoErro.java
+└── GlobalExceptionHandler.java
+
 morador/
 encomenda/
 historico/
@@ -155,6 +163,21 @@ Versionamento:
 | id | BIGSERIAL | PRIMARY KEY |
 | identificacao | VARCHAR(5) | NOT NULL, UNIQUE |
 
+
+### apartamento
+
+| Campo | Tipo | Restrições |
+|--------|------|------------|
+| id | BIGINT | PRIMARY KEY, IDENTITY |
+| numero | VARCHAR(10) | NOT NULL |
+| bloco_id | BIGINT | NOT NULL, FOREIGN KEY |
+
+Restrições adicionais:
+
+- `bloco_id` referencia `bloco(id)`.
+- A combinação `(bloco_id, numero)` é única.
+- O mesmo número de apartamento pode existir em blocos diferentes.
+- O mesmo número não pode se repetir dentro do mesmo bloco.
 ---
 
 # 📌 Roadmap
@@ -206,10 +229,10 @@ Versionamento:
 ## Sprint 5 — CRUD de Blocos ✅
 
 - [x] BlocoResponseDTO
-- [x] Endpoint GET /bloco
-- [x] Endpoint GET /bloco/{id}
-- [x] Endpoint PUT /bloco/{id}
-- [x] Endpoint DELETE /bloco/{id}
+- [x] Endpoint GET /blocos
+- [x] Endpoint GET /blocos/{id}
+- [x] Endpoint PUT /blocos/{id}
+- [x] Endpoint DELETE /blocos/{id}
 - [x] Conversão Entity → DTO
 - [x] AtualizarBlocoDTO
 - [x] Método de domínio para alteração
@@ -219,9 +242,34 @@ Versionamento:
 - [x] Tratamento de NoResourceFoundException
 - [x] Testes utilizando Postman
 ---
+
+---
+## Sprint 6 — Apartamentos 🚧
+
+- [x] Modelagem da entidade Apartamento
+- [x] Relacionamento `Apartamento -> Bloco`
+- [x] Migration V2 para criação da tabela apartamento
+- [x] Foreign Key entre apartamento e bloco
+- [x] Restrição de unicidade composta `(bloco_id, numero)`
+- [x] ApartamentoRepository
+- [x] Validação de duplicidade por bloco
+- [x] ApartamentoService
+- [x] CadastrarApartamentoDTO
+- [x] ApartamentoResponseDTO
+- [x] Endpoint POST /apartamentos
+- [x] Tratamento de `ApartamentoJaExisteNoBlocoException`
+- [x] Bean Validation para cadastro
+- [x] Tratamento de `HttpMessageNotReadableException`
+- [x] Refatoração da criação do `ApiError`
+- [x] Testes utilizando Postman
+- [ ] Listagem de apartamentos
+- [ ] Consulta de apartamento por ID
+- [ ] Atualização de apartamento
+- [ ] Exclusão de apartamento
+
+---
 ## Próximas Sprints
 
-- [ ] Apartamentos
 - [ ] Moradores
 - [ ] Encomendas
 - [ ] Histórico de Encomendas
@@ -229,6 +277,7 @@ Versionamento:
 - [ ] Docker
 - [ ] Autenticação
 - [ ] Deploy
+
 
 ---
 
@@ -244,7 +293,7 @@ Versionamento:
 
 ## Apartamentos
 
-- [ ] Cadastro
+- [x] Cadastro
 - [ ] Consulta
 - [ ] Atualização
 - [ ] Exclusão
@@ -428,12 +477,70 @@ Disponibilizar consultas e atualização de blocos, consolidando a padronizaçã
 - Validar previamente a existência do recurso antes da exclusão, mantendo respostas HTTP padronizadas.
 
 ---
+## Sprint 6
+
+### Objetivos
+
+Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e consolidando o tratamento padronizado de erros da API.
+
+### Entregas
+
+- Criação da entidade `Apartamento`.
+- Implementação do relacionamento `@ManyToOne` entre Apartamento e Bloco.
+- Utilização de `FetchType.LAZY` no relacionamento.
+- Criação da migration `V2__create_table_apartamento.sql`.
+- Criação da Foreign Key `apartamento.bloco_id -> bloco.id`.
+- Criação da restrição de unicidade composta `(bloco_id, numero)`.
+- Criação do `ApartamentoRepository`.
+- Implementação da consulta derivada `existsByNumeroAndBlocoId`.
+- Criação do `ApartamentoService`.
+- Validação da existência do bloco antes do cadastro.
+- Validação de duplicidade do número do apartamento dentro do mesmo bloco.
+- Criação da `ApartamentoJaExisteNoBlocoException`.
+- Criação do `CadastrarApartamentoDTO`.
+- Criação do `ApartamentoResponseDTO`.
+- Implementação do endpoint `POST /apartamentos`.
+- Retorno HTTP `201 Created`.
+- Validação dos dados de entrada com Bean Validation.
+- Tratamento de `HttpMessageNotReadableException` para corpo de requisição inválido ou incompatível.
+- Refatoração do `GlobalExceptionHandler`.
+- Centralização da criação de respostas `ApiError` no método auxiliar `criarRespostaErro()`.
+- Testes dos principais cenários utilizando Postman.
+
+### Principais aprendizados
+
+- Relacionamentos entre entidades utilizando `@ManyToOne`.
+- Diferença entre relacionamento no banco de dados e navegação entre objetos Java.
+- Utilização de `FetchType.LAZY`.
+- Foreign Keys.
+- Restrições de unicidade compostas.
+- Derived Queries utilizando propriedades de entidades relacionadas.
+- Diferença entre validação de DTO e proteção do estado da entidade.
+- `@NotNull`, `@NotBlank`, `@Size` e `@Pattern`.
+- Conversão automática realizada pelo Jackson.
+- Diferença entre Bean Validation e erros de desserialização do JSON.
+- Funcionamento do `HttpMessageNotReadableException`.
+- Refatoração sem alteração de comportamento.
+- Identificação e remoção de duplicação de código.
+
+### Principais decisões arquiteturais
+
+- Manter o relacionamento inicialmente unidirecional de `Apartamento` para `Bloco`, evitando adicionar `@OneToMany` sem um caso de uso que justifique.
+- Manter `blocoId` no contrato de entrada da API e converter esse identificador para uma entidade `Bloco` válida na camada Service.
+- Não expor diretamente entidades JPA nas respostas da API.
+- Retornar no `ApartamentoResponseDTO` tanto o identificador quanto a identificação do bloco.
+- Garantir a unicidade do apartamento dentro do bloco tanto na aplicação quanto no banco de dados.
+- Utilizar Bean Validation no DTO para validar o contrato HTTP.
+- Manter a entidade responsável por impedir estados inválidos básicos.
+- Centralizar a construção do `ApiError` dentro do `GlobalExceptionHandler`, evitando duplicação sem criar uma nova abstração prematuramente.
+- Manter inicialmente uma resposta geral para `HttpMessageNotReadableException`, deixando a identificação específica do campo como possível evolução futura.
+---
 ## Backlog Técnico
 
-- [ ] Centralizar normalização de textos (trim + uppercase) para evitar duplicação entre Services.
-- [ ] Centralizar a criação do ApiError para reduzir repetição no GlobalExceptionHandler.
+- [x] Centralizar a criação do `ApiError` para reduzir repetição no `GlobalExceptionHandler`.
+- [ ] Centralizar normalização de textos (`trim + uppercase`) para evitar duplicação entre Services.
 - [ ] Impedir exclusão de blocos que possuam apartamentos vinculados.
-
+- [ ] Melhorar o tratamento de `HttpMessageNotReadableException` para identificar o campo inválido quando o Jackson disponibilizar essa informação.
 ---
 
 # 👨‍💻 Autor
