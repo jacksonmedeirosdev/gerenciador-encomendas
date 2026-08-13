@@ -4,6 +4,6 @@ public record ApartamentoResponseDTO(
         Long id,
         String numero,
         Long blocoId,
-        String identificacao
+        String blocoIdentificacao
 ) {
 }

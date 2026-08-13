@@ -12,6 +12,7 @@ public class Apartamento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+
     @Column(name= "numero",  nullable = false,  length = 10)
     private String numero;
 
@@ -24,10 +25,10 @@ public class Apartamento {
     public Apartamento(String numero, Bloco bloco){
 
         if (numero == null || numero.isBlank()){
-            throw new IllegalArgumentException("O número do apartamento é obrigatória.");
+            throw new IllegalArgumentException("O número do apartamento é obrigatório.");
         }
         if (bloco == null){
-            throw new IllegalArgumentException("O bloco é obrigatória para cadastrar o apartamento.");
+            throw new IllegalArgumentException("O bloco é obrigatório para cadastrar o apartamento.");
         }
 
         this.numero = numero;

@@ -3,6 +3,7 @@ package br.com.jjnervosia.gerenciador_encomendas.exception;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,153 +26,134 @@ public class GlobalExceptionHandler {
 
 
     ) {
-
-        HttpStatus status = HttpStatus.CONFLICT;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
+        return criarRespostaErro(
+                HttpStatus.CONFLICT,
                 exception.getMessage(),
-                request.getRequestURI(),
-                LocalDateTime.now(),
+                request,
                 List.of()
         );
-
-        return ResponseEntity
-                .status(status)
-                .body(erro);
     }
 
     @ExceptionHandler(BlocoNaoEncontradoException.class)
     public ResponseEntity<ApiError> tratarBlocoNaoEncontrado(
             BlocoNaoEncontradoException exception,
             HttpServletRequest request
-    ){
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
+    ) {
+
+        return criarRespostaErro(HttpStatus.NOT_FOUND,
                 exception.getMessage(),
-                request.getRequestURI(),
-                LocalDateTime.now(),
-                List.of()
-        );
-        return ResponseEntity
-                .status(status)
-                .body(erro);
+                request,
+                List.of());
+
     }
 
     @ExceptionHandler(ApartamentoJaExisteNoBlocoException.class)
     public ResponseEntity<ApiError> tratarApartamentoJaExiste(
             ApartamentoJaExisteNoBlocoException exception,
             HttpServletRequest request
-    ){
-        HttpStatus status = HttpStatus.CONFLICT;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
+    ) {
+        return criarRespostaErro(
+                HttpStatus.CONFLICT,
                 exception.getMessage(),
-                request.getRequestURI(),
-                LocalDateTime.now(),
+                request,
                 List.of()
         );
-
-        return ResponseEntity
-                .status(status)
-                .body(erro);
-
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> tratarErroValidacao(
             MethodArgumentNotValidException exception,
             HttpServletRequest request
-    ){
+    ) {
         List<CampoErro> erros = new ArrayList<>();
 
-        for (FieldError fieldError : exception.getFieldErrors()){
+        for (FieldError fieldError : exception.getFieldErrors()) {
             erros.add(new CampoErro(
                     fieldError.getField(),
                     fieldError.getDefaultMessage()
             ));
         }
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
-                "Um ou mais campos são inválidos",
-                request.getRequestURI(),
-                LocalDateTime.now(),
-                erros
-        );
-        return ResponseEntity
-                .status(status)
-                .body(erro);
 
+        return criarRespostaErro(HttpStatus.BAD_REQUEST,
+                "Um ou mais campos são inválidos",
+                request,
+                erros);
     }
 
-   @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public ResponseEntity<ApiError> tratarMetodoHttpNaoSuportado(
             HttpRequestMethodNotSupportedException exception,
             HttpServletRequest request
-   ){
-        HttpStatus status = HttpStatus.METHOD_NOT_ALLOWED;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
-                "O endpoint '"
-                        + request.getRequestURI() +
-                        "' não suporta o método HTTP "
-                        + exception.getMethod() + ".",
-                request.getRequestURI(),
-                LocalDateTime.now(),
-                List.of()
-        );
+    ) {
+        String mensagem = "O endpoint '"
+                + request.getRequestURI() +
+                "' não suporta o método HTTP "
+                + exception.getMethod() + ".";
+        return criarRespostaErro(HttpStatus.METHOD_NOT_ALLOWED,
+                mensagem,
+                request,
+                List.of());
 
-        return ResponseEntity
-                .status(status)
-                .body(erro);
-    };
+    }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     public ResponseEntity<ApiError> tratarParametroInvalido(
             MethodArgumentTypeMismatchException exception,
             HttpServletRequest request
-     ){
+    ) {
 
-        String mensagem = "O parâmetro '" + exception.getName() + "' recebeu o valor '"+ exception.getValue() +"'," +
-                " mas deve ser um número inteiro.";
-        
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        ApiError erro = new ApiError(
-                status.value(),
-                status.getReasonPhrase(),
+        String mensagem = "O parâmetro da URL '" + exception.getName() +
+                "' recebeu o valor '" + exception.getValue() +
+                "', mas deve ser um número inteiro.";
+
+        return criarRespostaErro(HttpStatus.BAD_REQUEST,
                 mensagem,
-                request.getRequestURI(),
-                LocalDateTime.now(),
-                List.of()
-        );
-        
-        return ResponseEntity
-                .status(status)
-                .body(erro);
+                request,
+                List.of());
     }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ResponseEntity<ApiError> tratarEndPointNaoEncontrado(
             NoResourceFoundException exception,
             HttpServletRequest request
+    ) {
+        String mensagem = "O endpoint " + request.getRequestURI() + " não existe";
+        return criarRespostaErro(HttpStatus.NOT_FOUND,
+                mensagem,
+                request,
+                List.of());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ResponseEntity<ApiError> tratarParametroInvalido(
+            HttpMessageNotReadableException exception,
+            HttpServletRequest request
+
     ){
-        HttpStatus status = HttpStatus.NOT_FOUND;
+        String mensagem =  "O corpo da requisição contém dados inválidos ou incompatíveis com o formato esperado.";
+        return criarRespostaErro(
+                HttpStatus.BAD_REQUEST,
+                mensagem,
+                request,
+                List.of()
+        );
+
+    }
+
+    private ResponseEntity<ApiError> criarRespostaErro(
+            HttpStatus status,
+            String mensagem,
+            HttpServletRequest request,
+            List<CampoErro> erros
+    ) {
         ApiError erro = new ApiError(
                 status.value(),
                 status.getReasonPhrase(),
-                "O endpoint " + request.getRequestURI() + " não existe",
+                mensagem,
                 request.getRequestURI(),
                 LocalDateTime.now(),
-                List.of()
+                erros
         );
-        return ResponseEntity
-                .status(status)
-                .body(erro);
+        return ResponseEntity.status(status).body(erro);
     }
 }
