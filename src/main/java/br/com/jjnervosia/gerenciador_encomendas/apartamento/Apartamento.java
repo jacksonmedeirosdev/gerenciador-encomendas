@@ -2,6 +2,8 @@ package br.com.jjnervosia.gerenciador_encomendas.apartamento;
 
 import br.com.jjnervosia.gerenciador_encomendas.bloco.Bloco;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 
 @Entity
@@ -35,4 +37,8 @@ public class Apartamento {
         this.bloco = bloco;
     }
 
+    public void alterarNumeroEBloco(String numero, Bloco bloco) {
+        this.numero = numero;
+        this.bloco = bloco;
+    }
 }
