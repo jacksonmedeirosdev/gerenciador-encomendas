@@ -60,6 +60,19 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(ApartamentoNaoEncontradoException.class)
+    public ResponseEntity<ApiError> tratarApartamentoNaoEncontrado(
+            ApartamentoNaoEncontradoException exception,
+            HttpServletRequest request
+    ) {
+        return criarRespostaErro(
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                request,
+                List.of()
+        );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> tratarErroValidacao(
             MethodArgumentNotValidException exception,
@@ -129,8 +142,8 @@ public class GlobalExceptionHandler {
             HttpMessageNotReadableException exception,
             HttpServletRequest request
 
-    ){
-        String mensagem =  "O corpo da requisição contém dados inválidos ou incompatíveis com o formato esperado.";
+    ) {
+        String mensagem = "O corpo da requisição contém dados inválidos ou incompatíveis com o formato esperado.";
         return criarRespostaErro(
                 HttpStatus.BAD_REQUEST,
                 mensagem,

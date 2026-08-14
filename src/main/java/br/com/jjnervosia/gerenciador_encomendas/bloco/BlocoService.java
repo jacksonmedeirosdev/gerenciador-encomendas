@@ -31,7 +31,6 @@ public class BlocoService {
     }
 
 
-
     public List<BlocoResponseDTO> listar() {
         List<BlocoResponseDTO> blocosResponse = new ArrayList<>();
 
@@ -46,19 +45,19 @@ public class BlocoService {
 
         return blocosResponse;
     }
-    public BlocoResponseDTO buscarPorId(Long id){
 
-        Bloco bloco = repository.findById(id).orElseThrow(() ->  new BlocoNaoEncontradoException(id));
+    public BlocoResponseDTO buscarPorId(Long id) {
+
+        Bloco bloco = repository.findById(id).orElseThrow(() -> new BlocoNaoEncontradoException(id));
 
         return new BlocoResponseDTO(
                 bloco.getId(),
                 bloco.getIdentificacao());
-
     }
 
     public BlocoResponseDTO atualizar(AtualizarBlocoDTO dto, Long id) {
 
-        Bloco blocoAtual = repository.findById(id).orElseThrow(() ->  new BlocoNaoEncontradoException(id));
+        Bloco blocoAtual = repository.findById(id).orElseThrow(() -> new BlocoNaoEncontradoException(id));
 
         Optional<Bloco> blocoEncontrado = repository.findByIdentificacao(dto.identificacao());
 
@@ -80,7 +79,7 @@ public class BlocoService {
     }
 
     public void remover(Long id) {
-        Bloco blocoAtual = repository.findById(id).orElseThrow(() ->  new BlocoNaoEncontradoException(id));
+        Bloco blocoAtual = repository.findById(id).orElseThrow(() -> new BlocoNaoEncontradoException(id));
 
         repository.delete(blocoAtual);
     }

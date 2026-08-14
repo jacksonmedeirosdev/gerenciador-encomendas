@@ -4,8 +4,12 @@ import br.com.jjnervosia.gerenciador_encomendas.apartamento.dto.ApartamentoRespo
 import br.com.jjnervosia.gerenciador_encomendas.bloco.Bloco;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.BlocoRepository;
 import br.com.jjnervosia.gerenciador_encomendas.exception.ApartamentoJaExisteNoBlocoException;
+import br.com.jjnervosia.gerenciador_encomendas.exception.ApartamentoNaoEncontradoException;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoNaoEncontradoException;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ApartamentoService {
@@ -39,6 +43,31 @@ public class ApartamentoService {
                 bloco.getId(),
                 bloco.getIdentificacao()
 
+        );
+    }
+
+    public List<ApartamentoResponseDTO> listar(){
+        List<Apartamento> apartamentos = apartamentoRepository.findAll();
+        List<ApartamentoResponseDTO> apartamentosResponseDTO = new ArrayList<>();
+
+        for (Apartamento apartamento : apartamentos){
+            apartamentosResponseDTO.add(new ApartamentoResponseDTO(
+                    apartamento.getId(),
+                    apartamento.getNumero(),
+                    apartamento.getBloco().getId(),
+                    apartamento.getBloco().getIdentificacao()));
+
+        }
+        return apartamentosResponseDTO;
+    }
+
+    public ApartamentoResponseDTO buscarPorId(Long id){
+        Apartamento apartamento = apartamentoRepository.findById(id).orElseThrow(()-> new ApartamentoNaoEncontradoException(id));
+        return new ApartamentoResponseDTO(
+                apartamento.getId(),
+                apartamento.getNumero(),
+                apartamento.getBloco().getId(),
+                apartamento.getBloco().getIdentificacao()
         );
     }
 

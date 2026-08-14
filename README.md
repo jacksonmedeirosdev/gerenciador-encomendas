@@ -541,6 +541,7 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - [ ] Centralizar normalização de textos (`trim + uppercase`) para evitar duplicação entre Services.
 - [ ] Impedir exclusão de blocos que possuam apartamentos vinculados.
 - [ ] Melhorar o tratamento de `HttpMessageNotReadableException` para identificar o campo inválido quando o Jackson disponibilizar essa informação.
+- [ ] Gerar etiqueta de encomenda com QR Code para facilitar identificação e busca pela portaria.
 ---
 
 # 👨‍💻 Autor

@@ -5,10 +5,9 @@ import br.com.jjnervosia.gerenciador_encomendas.apartamento.dto.CadastrarApartam
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/apartamentos")
@@ -23,5 +22,19 @@ public class ApartamentoController {
     public ResponseEntity<ApartamentoResponseDTO> cadastrar(@Valid @RequestBody CadastrarApartamentoDTO dto){
         ApartamentoResponseDTO apartamentoResponseDTO = apartamentoService.cadastrar(dto.numero(), dto.blocoId());
         return ResponseEntity.status(HttpStatus.CREATED).body(apartamentoResponseDTO);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<ApartamentoResponseDTO>> listar(){
+        List<ApartamentoResponseDTO> apartamentosResponseDTO = apartamentoService.listar();
+        return ResponseEntity.status(HttpStatus.OK).body(apartamentosResponseDTO);
+
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<ApartamentoResponseDTO> buscarPorId(@PathVariable Long id){
+        ApartamentoResponseDTO apartamentoResponseDTO = apartamentoService.buscarPorId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(apartamentoResponseDTO);
+
     }
 }
