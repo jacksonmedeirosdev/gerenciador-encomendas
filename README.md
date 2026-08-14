@@ -50,6 +50,7 @@ bloco/
 apartamento/
 ├── dto/
 │   ├── CadastrarApartamentoDTO.java
+    ├── AtualizarApartamentoDTO.java
 │   └── ApartamentoResponseDTO.java
 ├── Apartamento.java
 ├── ApartamentoController.java
@@ -245,7 +246,7 @@ Restrições adicionais:
 ---
 
 ---
-## Sprint 6 — Apartamentos 🚧
+## Sprint 6 — Apartamentos ✅
 
 - [x] Modelagem da entidade Apartamento
 - [x] Relacionamento `Apartamento -> Bloco`
@@ -266,8 +267,8 @@ Restrições adicionais:
 - [x] Listagem de apartamentos
 - [x] Consulta de apartamento por ID
 - [x] Tratamento de `ApartamentoNaoEncontradoException`
-- [ ] Atualização de apartamento
-- [ ] Exclusão de apartamento
+- [x] Atualização de apartamento
+- [x] Exclusão de apartamento
 
 ---
 ## Próximas Sprints
@@ -299,7 +300,7 @@ Restrições adicionais:
 - [x] Listagem
 - [x] Consulta por ID
 - [x] Atualização
-- [ ] Exclusão
+- [x] Exclusão
 
 ## Moradores
 
@@ -517,6 +518,17 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Tratamento padronizado de apartamento inexistente com HTTP `404 Not Found`.
 - Reutilização do tratamento de `MethodArgumentTypeMismatchException` para identificadores inválidos na URL.
 - Testes dos endpoints utilizando Postman.
+- Criação do `AtualizarApartamentoDTO`.
+- Implementação do endpoint `PUT /apartamentos/{id}`.
+- Validação da existência do apartamento antes da atualização.
+- Validação da existência do bloco informado no corpo da requisição.
+- Validação de conflito da combinação `(numero, blocoId)` durante a atualização.
+- Reutilização da `ApartamentoJaExisteNoBlocoException` para conflitos de duplicidade.
+- Criação do método de domínio `alterarNumeroEBloco()`.
+- Implementação do endpoint `DELETE /apartamentos/{id}`.
+- Validação da existência do apartamento antes da exclusão.
+- Retorno HTTP `204 No Content` após exclusão bem-sucedida.
+- Testes dos fluxos de atualização e exclusão utilizando Postman.
 
 ### Principais aprendizados
 
@@ -541,6 +553,15 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Importância da nomenclatura dos métodos para representar corretamente sua intenção.
 - Acesso a entidades relacionadas durante a montagem de DTOs.
 - Introdução conceitual ao possível problema de N+1 consultas em relacionamentos `LAZY`, sem otimização prematura.
+- Atualização de recursos relacionados utilizando `PUT`.
+- Diferença entre identificar o recurso pela URL e definir seu novo estado pelo body.
+- Validação de conflito utilizando uma chave de negócio composta.
+- Uso de `Optional` para identificar se outra entidade ocupa a combinação desejada.
+- Diferença entre "recurso não encontrado" e "combinação disponível".
+- Reutilização de exceções de domínio quando a mesma regra de negócio é violada em fluxos diferentes.
+- Alteração de relacionamentos entre entidades.
+- Uso de métodos de domínio para modificar o estado da entidade sem expor setters públicos.
+- Exclusão com validação prévia de existência para manter respostas HTTP padronizadas.
 
 ### Principais decisões arquiteturais
 
@@ -556,6 +577,12 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Retornar `200 OK` com lista vazia nas consultas de coleção sem resultados, em vez de `404 Not Found`.
 - Manter a conversão de `Apartamento` para `ApartamentoResponseDTO` na camada Service.
 - Não otimizar antecipadamente o carregamento do relacionamento `LAZY`, deixando melhorias de performance para quando houver necessidade real.
+- Permitir a alteração conjunta de número e bloco do apartamento no mesmo `PUT`.
+- Tratar `numero + bloco` como combinação de negócio para validação de duplicidade.
+- Utilizar `findByNumeroAndBlocoId` na atualização para identificar se o conflito pertence ao próprio apartamento ou a outro registro.
+- Manter a alteração do estado da entidade através do método de domínio `alterarNumeroEBloco()`.
+- Validar a existência do recurso antes da exclusão e utilizar `delete(apartamento)` para manter o fluxo explícito.
+
 ---
 ## Backlog Técnico
 
