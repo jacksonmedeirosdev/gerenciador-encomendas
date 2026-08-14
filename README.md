@@ -62,7 +62,8 @@ exception/
 ├── BlocoJaExisteException.java
 ├── BlocoNaoEncontradoException.java
 ├── CampoErro.java
-└── GlobalExceptionHandler.java
+├── GlobalExceptionHandler.java
+└── ApartamentoNaoEncontradoException.java
 
 morador/
 encomenda/
@@ -262,8 +263,9 @@ Restrições adicionais:
 - [x] Tratamento de `HttpMessageNotReadableException`
 - [x] Refatoração da criação do `ApiError`
 - [x] Testes utilizando Postman
-- [ ] Listagem de apartamentos
-- [ ] Consulta de apartamento por ID
+- [x] Listagem de apartamentos
+- [x] Consulta de apartamento por ID
+- [x] Tratamento de `ApartamentoNaoEncontradoException`
 - [ ] Atualização de apartamento
 - [ ] Exclusão de apartamento
 
@@ -294,8 +296,9 @@ Restrições adicionais:
 ## Apartamentos
 
 - [x] Cadastro
-- [ ] Consulta
-- [ ] Atualização
+- [x] Listagem
+- [x] Consulta por ID
+- [x] Atualização
 - [ ] Exclusão
 
 ## Moradores
@@ -506,6 +509,14 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Refatoração do `GlobalExceptionHandler`.
 - Centralização da criação de respostas `ApiError` no método auxiliar `criarRespostaErro()`.
 - Testes dos principais cenários utilizando Postman.
+- Implementação do endpoint `GET /apartamentos`.
+- Implementação do endpoint `GET /apartamentos/{id}`.
+- Conversão da lista de entidades `Apartamento` para `List<ApartamentoResponseDTO>`.
+- Retorno de lista vazia com HTTP `200 OK` quando não existem apartamentos cadastrados.
+- Criação da `ApartamentoNaoEncontradoException`.
+- Tratamento padronizado de apartamento inexistente com HTTP `404 Not Found`.
+- Reutilização do tratamento de `MethodArgumentTypeMismatchException` para identificadores inválidos na URL.
+- Testes dos endpoints utilizando Postman.
 
 ### Principais aprendizados
 
@@ -522,6 +533,14 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Funcionamento do `HttpMessageNotReadableException`.
 - Refatoração sem alteração de comportamento.
 - Identificação e remoção de duplicação de código.
+- Reutilização do padrão Controller → Service → Repository em um novo domínio.
+- Conversão de coleções de entidades para coleções de DTOs.
+- Comportamento do `findAll()` quando não existem registros.
+- Reutilização de `findById()`, `Optional` e `orElseThrow()`.
+- Diferença entre o número de negócio do apartamento e seu identificador (`id`).
+- Importância da nomenclatura dos métodos para representar corretamente sua intenção.
+- Acesso a entidades relacionadas durante a montagem de DTOs.
+- Introdução conceitual ao possível problema de N+1 consultas em relacionamentos `LAZY`, sem otimização prematura.
 
 ### Principais decisões arquiteturais
 
@@ -534,6 +553,9 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Manter a entidade responsável por impedir estados inválidos básicos.
 - Centralizar a construção do `ApiError` dentro do `GlobalExceptionHandler`, evitando duplicação sem criar uma nova abstração prematuramente.
 - Manter inicialmente uma resposta geral para `HttpMessageNotReadableException`, deixando a identificação específica do campo como possível evolução futura.
+- Retornar `200 OK` com lista vazia nas consultas de coleção sem resultados, em vez de `404 Not Found`.
+- Manter a conversão de `Apartamento` para `ApartamentoResponseDTO` na camada Service.
+- Não otimizar antecipadamente o carregamento do relacionamento `LAZY`, deixando melhorias de performance para quando houver necessidade real.
 ---
 ## Backlog Técnico
 
