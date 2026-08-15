@@ -1,9 +1,11 @@
 package br.com.jjnervosia.gerenciador_encomendas.bloco;
 
+import br.com.jjnervosia.gerenciador_encomendas.apartamento.ApartamentoRepository;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.AtualizarBlocoDTO;
 import br.com.jjnervosia.gerenciador_encomendas.bloco.dto.BlocoResponseDTO;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoJaExisteException;
 import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoNaoEncontradoException;
+import br.com.jjnervosia.gerenciador_encomendas.exception.BlocoPossuiApartamentosException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +17,11 @@ public class BlocoService {
 
 
     private final BlocoRepository repository;
+    private final ApartamentoRepository apartamentoRepository;
 
-    public BlocoService(BlocoRepository repository) {
+    public BlocoService(BlocoRepository repository, ApartamentoRepository apartamentoRepository) {
         this.repository = repository;
+        this.apartamentoRepository = apartamentoRepository;
     }
 
     public void cadastrar(String identificacao) {
@@ -80,6 +84,10 @@ public class BlocoService {
 
     public void remover(Long id) {
         Bloco blocoAtual = repository.findById(id).orElseThrow(() -> new BlocoNaoEncontradoException(id));
+
+        if (apartamentoRepository.existsByBlocoId(id)) {
+            throw new BlocoPossuiApartamentosException(blocoAtual.getIdentificacao());
+        }
 
         repository.delete(blocoAtual);
     }

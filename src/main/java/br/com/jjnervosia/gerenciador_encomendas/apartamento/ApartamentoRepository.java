@@ -8,4 +8,6 @@ public interface ApartamentoRepository extends JpaRepository<Apartamento, Long> 
 
     boolean existsByNumeroAndBlocoId(String numero, Long blocoId);
     Optional<Apartamento> findByNumeroAndBlocoId(String numero, Long blocoId);
+    boolean existsByBlocoId(Long blocoId);
+
 }

@@ -73,6 +73,19 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(BlocoPossuiApartamentosException.class)
+    public ResponseEntity<ApiError> tratarBlocoPossuiApartamentos(
+            BlocoPossuiApartamentosException exception,
+            HttpServletRequest request
+    ){
+        return criarRespostaErro(
+                HttpStatus.CONFLICT,
+                exception.getMessage(),
+                request,
+                List.of()
+        );
+    }
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public ResponseEntity<ApiError> tratarErroValidacao(
             MethodArgumentNotValidException exception,
