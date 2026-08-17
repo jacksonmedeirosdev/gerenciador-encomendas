@@ -269,7 +269,19 @@ Restrições adicionais:
 - [x] Tratamento de `ApartamentoNaoEncontradoException`
 - [x] Atualização de apartamento
 - [x] Exclusão de apartamento
+---
+## Sprint 7 — Qualidade e Documentação da API 🚧
 
+- [x] Impedir exclusão de blocos com apartamentos vinculados
+- [x] Configurar Springdoc OpenAPI
+- [x] Configurar informações gerais da API
+- [x] Documentar endpoints de Blocos
+- [x] Documentar endpoints de Apartamentos
+- [x] Documentar respostas HTTP
+- [x] Documentar schema padronizado de erro com `ApiError`
+- [ ] Remover credenciais do banco do versionamento
+- [ ] Configurar variáveis de ambiente
+- [ ] Testes automatizados
 ---
 ## Próximas Sprints
 
@@ -582,15 +594,53 @@ Iniciar o domínio de apartamentos, implementando o relacionamento com blocos e 
 - Utilizar `findByNumeroAndBlocoId` na atualização para identificar se o conflito pertence ao próprio apartamento ou a outro registro.
 - Manter a alteração do estado da entidade através do método de domínio `alterarNumeroEBloco()`.
 - Validar a existência do recurso antes da exclusão e utilizar `delete(apartamento)` para manter o fluxo explícito.
+---
+## Sprint 7
 
+### Objetivos
+
+Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçando regras de integridade e iniciando a documentação interativa com OpenAPI/Swagger.
+
+### Entregas
+
+- Implementação da consulta `existsByBlocoId`.
+- Criação da `BlocoPossuiApartamentosException`.
+- Bloqueio da exclusão de blocos com apartamentos vinculados.
+- Retorno HTTP `409 Conflict` para tentativa de exclusão inválida.
+- Configuração do Springdoc OpenAPI.
+- Criação da configuração global da documentação da API.
+- Documentação dos endpoints de Blocos.
+- Documentação dos endpoints de Apartamentos.
+- Documentação dos principais códigos HTTP de sucesso e erro.
+- Associação das respostas de erro ao schema `ApiError`.
+- Validação da documentação através do Swagger UI.
+
+### Principais aprendizados
+
+- Consultas de existência com Spring Data JPA.
+- Navegação por propriedades relacionadas em derived queries.
+- Diferença entre `fix` e `refactor` em Conventional Commits.
+- Conceitos de OpenAPI e Swagger UI.
+- Uso de `@Tag`, `@Operation`, `@ApiResponses`, `@ApiResponse`, `@Content` e `@Schema`.
+- Diferença entre documentar apenas o status HTTP e documentar também o contrato do corpo da resposta.
+- Uso de documentação como parte do contrato público de uma API.
+
+### Principais decisões arquiteturais
+
+- Impedir a exclusão de blocos com apartamentos vinculados.
+- Permitir a atualização da identificação do bloco mesmo quando houver apartamentos vinculados.
+- Documentar os erros da API utilizando o mesmo contrato `ApiError` utilizado em tempo de execução.
+- Adiar exemplos personalizados no Swagger para evitar poluição excessiva das Controllers.
 ---
 ## Backlog Técnico
 
 - [x] Centralizar a criação do `ApiError` para reduzir repetição no `GlobalExceptionHandler`.
+- [x] Impedir exclusão de blocos que possuam apartamentos vinculados.
 - [ ] Centralizar normalização de textos (`trim + uppercase`) para evitar duplicação entre Services.
-- [ ] Impedir exclusão de blocos que possuam apartamentos vinculados.
 - [ ] Melhorar o tratamento de `HttpMessageNotReadableException` para identificar o campo inválido quando o Jackson disponibilizar essa informação.
 - [ ] Gerar etiqueta de encomenda com QR Code para facilitar identificação e busca pela portaria.
+- [ ] Adicionar exemplos personalizados de respostas no Swagger/OpenAPI.
+
 ---
 
 # 👨‍💻 Autor
