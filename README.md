@@ -413,7 +413,9 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 - [x] Documentar schema padronizado de erro com `ApiError`
 - [x] Remover credenciais do banco do versionamento
 - [x] Configurar variáveis de ambiente
-- [ ] Testes automatizados
+- [x] Introdução aos testes unitários
+- [x] Testes unitários iniciais da BlocoService
+- [ ] Testes unitários da ApartamentoService
 ---
 ## Próximas Sprints
 

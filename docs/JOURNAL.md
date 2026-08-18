@@ -279,6 +279,24 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Configuração das variáveis `DB_URL`, `DB_USERNAME` e `DB_PASSWORD` no ambiente local.
 - Validação da inicialização da aplicação e conexão com o banco após a alteração.
 - Separação do Journal de Desenvolvimento do README principal.
+- Conceito de teste unitário.
+- Diferença entre teste manual e teste automatizado.
+- Estrutura de testes utilizando `src/test/java`.
+- Padrão Arrange, Act e Assert.
+- Papel do JUnit 5 como framework responsável por executar e organizar os testes.
+- Uso de `@Test`.
+- Uso de `assertEquals()` para validar resultados.
+- Uso de `assertThrows()` para validar exceções esperadas.
+- Papel do Mockito na criação de dependências simuladas.
+- Uso de `@Mock` para criar objetos falsos.
+- Uso de `@InjectMocks` para injetar os mocks na classe testada.
+- Uso de `@ExtendWith(MockitoExtension.class)` para integrar Mockito ao JUnit 5.
+- Uso de `when(...).thenReturn(...)` para controlar o comportamento dos mocks.
+- Uso de `verify()` para validar interações com dependências.
+- Uso de `never()` para garantir que determinada operação não seja executada.
+- Uso de `any()` como matcher de argumentos.
+- Uso de `Optional.of()` e `Optional.empty()` em cenários de teste.
+- Diferença entre validar o valor retornado e validar a interação entre objetos.
 
 ### Principais aprendizados
 
@@ -293,6 +311,10 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Diferença entre configuração da aplicação e segredo de ambiente.
 - Boas práticas para evitar credenciais versionadas em repositórios.
 - Organização da documentação do projeto separando apresentação e histórico técnico.
+  Iniciar os testes automatizados pela camada Service para validar regras de negócio isoladamente.
+- Utilizar mocks dos repositories para evitar dependência de banco de dados nos testes unitários.
+- Manter os testes organizados no mesmo package da classe testada dentro de `src/test/java`.
+- Priorizar inicialmente os principais caminhos de sucesso e erro, evitando buscar cobertura total prematuramente.
 
 ### Principais decisões arquiteturais
 
