@@ -64,8 +64,11 @@ exception/
 ├── BlocoNaoEncontradoException.java
 ├── CampoErro.java
 ├── GlobalExceptionHandler.java
-├──BlocoPossuiApartamentosException.java
+├── BlocoPossuiApartamentosException.java
 └── ApartamentoNaoEncontradoException.java
+
+config/
+├── OpenApiConfig.java
 
 morador/
 encomenda/
@@ -182,6 +185,134 @@ Restrições adicionais:
 - O mesmo número de apartamento pode existir em blocos diferentes.
 - O mesmo número não pode se repetir dentro do mesmo bloco.
 ---
+
+# ▶️ Como executar o projeto
+
+## Pré-requisitos
+
+Antes de iniciar a aplicação, tenha instalado:
+
+- Java 21
+- PostgreSQL
+- Git
+
+O projeto utiliza Maven Wrapper, portanto não é necessário instalar o Maven separadamente.
+
+---
+
+## 1. Clone o repositório
+
+```bash
+git clone https://github.com/jacksonmedeirosdev/gerenciador-encomendas.git
+```
+
+Entre na pasta do projeto:
+
+```bash
+cd gerenciador-encomendas
+```
+
+---
+
+## 2. Crie o banco de dados
+
+No PostgreSQL, crie o banco:
+
+```sql
+CREATE DATABASE gerenciador_encomendas;
+```
+
+As tabelas e alterações de estrutura são controladas automaticamente pelo Flyway ao iniciar a aplicação.
+
+---
+
+## 3. Configure as variáveis de ambiente
+
+A aplicação utiliza as seguintes variáveis:
+
+```text
+DB_URL
+DB_USERNAME
+DB_PASSWORD
+```
+
+Exemplo:
+
+```text
+DB_URL=jdbc:postgresql://localhost:5432/gerenciador_encomendas
+DB_USERNAME=postgres
+DB_PASSWORD=sua_senha
+```
+
+As credenciais não são armazenadas diretamente no repositório.
+
+### Windows PowerShell
+
+No terminal, execute:
+
+```powershell
+$env:DB_URL="jdbc:postgresql://localhost:5432/gerenciador_encomendas"
+$env:DB_USERNAME="postgres"
+$env:DB_PASSWORD="sua_senha"
+```
+
+Essas variáveis ficam disponíveis durante a sessão atual do terminal.
+
+---
+
+## 4. Execute a aplicação
+
+Certifique-se de estar na raiz do projeto, onde está localizado o arquivo `pom.xml`.
+
+### Windows PowerShell
+
+```powershell
+.\mvnw.cmd spring-boot:run
+```
+
+### Linux / macOS
+
+```bash
+./mvnw spring-boot:run
+```
+
+Também é possível iniciar a aplicação diretamente pela IDE.
+
+Quando a aplicação iniciar corretamente, o servidor estará disponível em:
+
+```text
+http://localhost:8080
+```
+
+---
+
+## 5. Acesse a documentação da API
+
+Com a aplicação em execução, acesse:
+
+```text
+http://localhost:8080/swagger-ui.html
+```
+
+A especificação OpenAPI está disponível em:
+
+```text
+http://localhost:8080/v3/api-docs
+```
+
+---
+
+## 6. Pare a aplicação
+
+Quando a aplicação estiver rodando no terminal, pressione:
+
+```text
+Ctrl + C
+```
+
+Isso encerra o processo do Spring Boot e libera a porta `8080`.
+
+Se o terminal solicitar confirmação para finalizar o processo, confirme a operação.
 
 # 📌 Roadmap
 
