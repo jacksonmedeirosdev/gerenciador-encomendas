@@ -110,10 +110,10 @@ Disponibilizar consultas e atualização de blocos, consolidando a padronizaçã
 
 ### Entregas
 
-- Implementação do endpoint `GET /bloco`.
-- Implementação do endpoint `GET /bloco/{id}`.
-- Implementação do endpoint `PUT /bloco/{id}`.
-- Implementação do endpoint `DELETE /bloco/{id}`.
+- Implementação do endpoint `GET /blocos`.
+- Implementação do endpoint `GET /blocos/{id}`.
+- Implementação do endpoint `PUT /blocos/{id}`.
+- Implementação do endpoint `DELETE /blocos/{id}`.
 - Criação do `BlocoResponseDTO`.
 - Criação do `AtualizarBlocoDTO`.
 - Conversão de Entity para DTO.
@@ -274,6 +274,11 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Documentação dos principais códigos HTTP de sucesso e erro.
 - Associação das respostas de erro ao schema `ApiError`.
 - Validação da documentação através do Swagger UI.
+- Remoção das credenciais do banco de dados do `application.properties`.
+- Configuração da conexão com PostgreSQL utilizando variáveis de ambiente.
+- Configuração das variáveis `DB_URL`, `DB_USERNAME` e `DB_PASSWORD` no ambiente local.
+- Validação da inicialização da aplicação e conexão com o banco após a alteração.
+- Separação do Journal de Desenvolvimento do README principal.
 
 ### Principais aprendizados
 
@@ -284,6 +289,10 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Uso de `@Tag`, `@Operation`, `@ApiResponses`, `@ApiResponse`, `@Content` e `@Schema`.
 - Diferença entre documentar apenas o status HTTP e documentar também o contrato do corpo da resposta.
 - Uso de documentação como parte do contrato público de uma API.
+- Uso de variáveis de ambiente para configurações sensíveis.
+- Diferença entre configuração da aplicação e segredo de ambiente.
+- Boas práticas para evitar credenciais versionadas em repositórios.
+- Organização da documentação do projeto separando apresentação e histórico técnico.
 
 ### Principais decisões arquiteturais
 

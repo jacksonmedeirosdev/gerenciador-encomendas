@@ -50,7 +50,7 @@ bloco/
 apartamento/
 ├── dto/
 │   ├── CadastrarApartamentoDTO.java
-    ├── AtualizarApartamentoDTO.java
+│   ├── AtualizarApartamentoDTO.java
 │   └── ApartamentoResponseDTO.java
 ├── Apartamento.java
 ├── ApartamentoController.java
@@ -64,6 +64,7 @@ exception/
 ├── BlocoNaoEncontradoException.java
 ├── CampoErro.java
 ├── GlobalExceptionHandler.java
+├──BlocoPossuiApartamentosException.java
 └── ApartamentoNaoEncontradoException.java
 
 morador/
@@ -279,8 +280,8 @@ Restrições adicionais:
 - [x] Documentar endpoints de Apartamentos
 - [x] Documentar respostas HTTP
 - [x] Documentar schema padronizado de erro com `ApiError`
-- [ ] Remover credenciais do banco do versionamento
-- [ ] Configurar variáveis de ambiente
+- [x] Remover credenciais do banco do versionamento
+- [x] Configurar variáveis de ambiente
 - [ ] Testes automatizados
 ---
 ## Próximas Sprints
@@ -288,7 +289,6 @@ Restrições adicionais:
 - [ ] Moradores
 - [ ] Encomendas
 - [ ] Histórico de Encomendas
-- [ ] Swagger / OpenAPI
 - [ ] Docker
 - [ ] Autenticação
 - [ ] Deploy
@@ -334,7 +334,6 @@ Restrições adicionais:
 - [ ] Dashboard administrativo
 - [ ] Múltiplos condomínios
 - [ ] Docker
-- [ ] Swagger
 - [ ] Deploy
 ---
 
