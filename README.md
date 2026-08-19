@@ -402,7 +402,7 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 - [x] Atualização de apartamento
 - [x] Exclusão de apartamento
 ---
-## Sprint 7 — Qualidade e Documentação da API 🚧
+## Sprint 7 — Qualidade e Documentação da API ✅
 
 - [x] Impedir exclusão de blocos com apartamentos vinculados
 - [x] Configurar Springdoc OpenAPI
@@ -415,7 +415,7 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 - [x] Configurar variáveis de ambiente
 - [x] Introdução aos testes unitários
 - [x] Testes unitários iniciais da BlocoService
-- [ ] Testes unitários da ApartamentoService
+- [x] Testes unitários da ApartamentoService
 ---
 ## Próximas Sprints
 

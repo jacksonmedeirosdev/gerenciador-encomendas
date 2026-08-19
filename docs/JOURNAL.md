@@ -297,7 +297,13 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Uso de `any()` como matcher de argumentos.
 - Uso de `Optional.of()` e `Optional.empty()` em cenários de teste.
 - Diferença entre validar o valor retornado e validar a interação entre objetos.
-
+- Criação dos primeiros testes unitários da `ApartamentoService`.
+- Teste de cadastro de apartamento com sucesso.
+- Teste de cadastro com bloco inexistente.
+- Teste de cadastro duplicado no mesmo bloco.
+- Teste de consulta de apartamento por ID.
+- Teste de apartamento inexistente.
+- 
 ### Principais aprendizados
 
 - Consultas de existência com Spring Data JPA.
@@ -315,11 +321,22 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Utilizar mocks dos repositories para evitar dependência de banco de dados nos testes unitários.
 - Manter os testes organizados no mesmo package da classe testada dentro de `src/test/java`.
 - Priorizar inicialmente os principais caminhos de sucesso e erro, evitando buscar cobertura total prematuramente.
-
+- Necessidade de preparar nos mocks todo o caminho executado pela Service até a regra que está sendo testada.
+- Diferença entre o retorno do Repository (`Entity`) e o retorno da Service (`DTO`).
+- Uso do retorno mockado de `save()` para simular a entidade persistida.
+- Uso de `verify()` quando a interação com a dependência faz parte do comportamento que se deseja validar.
+- Uso de `verify(..., never())` para garantir que uma operação relevante não ocorra após uma regra impedir o fluxo.
+- Entendimento de que nem todo método precisa ser testado apenas por existir; a prioridade deve estar nos comportamentos e regras relevantes.
+- 
 ### Principais decisões arquiteturais
 
 - Impedir a exclusão de blocos com apartamentos vinculados.
 - Permitir a atualização da identificação do bloco mesmo quando houver apartamentos vinculados.
 - Documentar os erros da API utilizando o mesmo contrato `ApiError` utilizado em tempo de execução.
 - Adiar exemplos personalizados no Swagger para evitar poluição excessiva das Controllers.
+- Não buscar cobertura total de testes nesta etapa.
+- Priorizar entendimento dos fundamentos de testes unitários antes de ampliar a suíte.
+- Utilizar BlocoService e ApartamentoService como base prática para consolidar JUnit 5 e Mockito.
+- Retomar a ampliação da cobertura de testes conforme novas regras de negócio forem adicionadas ao projeto.
+
 ---
