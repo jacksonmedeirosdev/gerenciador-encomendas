@@ -417,9 +417,28 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 - [x] Testes unitários iniciais da BlocoService
 - [x] Testes unitários da ApartamentoService
 ---
+
+## Sprint 8 — Moradores 🚧
+
+- [x] Modelagem da entidade Morador
+- [x] Relacionamento `Morador -> Apartamento`
+- [x] Configuração explícita da Foreign Key com `@JoinColumn`
+- [x] Migration V3 para criação da tabela `morador`
+- [x] MoradorRepository
+- [x] MoradorService
+- [x] CadastrarMoradorDTO
+- [x] MoradorResponseDTO
+- [x] Endpoint POST /moradores
+- [x] Bean Validation para cadastro
+- [x] Retorno HTTP 201 Created
+- [x] Validação de apartamento inexistente
+- [x] Testes iniciais utilizando Postman
+- [ ] Listagem de moradores
+- [ ] Consulta de morador por ID
+- [ ] Atualização de morador
+- [ ] Exclusão de morador
 ## Próximas Sprints
 
-- [ ] Moradores
 - [ ] Encomendas
 - [ ] Histórico de Encomendas
 - [ ] Docker
@@ -449,7 +468,7 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 
 ## Moradores
 
-- [ ] Cadastro
+- [x] Cadastro
 - [ ] Consulta
 - [ ] Atualização
 - [ ] Exclusão
@@ -484,7 +503,8 @@ O histórico detalhado de evolução do projeto, decisões técnicas e principai
 - [ ] Melhorar o tratamento de `HttpMessageNotReadableException` para identificar o campo inválido quando o Jackson disponibilizar essa informação.
 - [ ] Gerar etiqueta de encomenda com QR Code para facilitar identificação e busca pela portaria.
 - [ ] Adicionar exemplos personalizados de respostas no Swagger/OpenAPI.
-
+- [ ] Tornar explícito o mapeamento da FK `bloco_id` em `Apartamento` com `@JoinColumn`.
+- [ ] Avaliar estratégia para evitar cadastros acidentais duplicados de moradores sem impedir pessoas diferentes com o mesmo nome. `@JoinColumn`.
 ---
 
 # 👨‍💻 Autor

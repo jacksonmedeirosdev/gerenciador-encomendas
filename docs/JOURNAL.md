@@ -340,3 +340,59 @@ Aumentar a qualidade técnica e a capacidade de apresentação da API, reforçan
 - Retomar a ampliação da cobertura de testes conforme novas regras de negócio forem adicionadas ao projeto.
 
 ---
+
+## Sprint 8
+
+### Objetivos
+
+Iniciar o domínio de moradores, relacionando cada morador a um apartamento existente e aplicando os padrões arquiteturais consolidados nas Sprints anteriores.
+
+### Entregas
+
+- Criação da entidade `Morador`.
+- Definição do identificador utilizando `Long` e `GenerationType.IDENTITY`.
+- Criação do atributo `nome` com limite de 100 caracteres.
+- Implementação do relacionamento `@ManyToOne` entre Morador e Apartamento.
+- Utilização de `FetchType.LAZY` no relacionamento.
+- Configuração explícita da Foreign Key utilizando `@JoinColumn`.
+- Definição de `apartamento_id` como obrigatório no modelo de persistência.
+- Criação da migration `V3__create_table_morador.sql`.
+- Criação da tabela `morador`.
+- Criação da Foreign Key `morador.apartamento_id -> apartamento.id`.
+- Criação do `MoradorRepository`.
+- Criação da `MoradorService`.
+- Validação da existência do apartamento antes do cadastro.
+- Reutilização da `ApartamentoNaoEncontradoException`.
+- Criação do `CadastrarMoradorDTO`.
+- Criação do `MoradorResponseDTO`.
+- Bean Validation para os dados de entrada.
+- Validação do tamanho máximo do nome com `@Size(max = 100)`.
+- Criação do endpoint `POST /moradores`.
+- Retorno HTTP `201 Created`.
+- Testes dos primeiros cenários utilizando Postman.
+
+### Principais aprendizados
+
+- Reutilização do padrão Controller → Service → Repository em um novo domínio.
+- Relacionamento de muitos moradores para um apartamento utilizando `@ManyToOne`.
+- Uso de `@JoinColumn` para tornar explícito o mapeamento da Foreign Key na entidade.
+- Diferença entre o mapeamento JPA e a restrição efetivamente criada no banco através da migration.
+- Proteção da obrigatoriedade do apartamento tanto na aplicação quanto no banco.
+- Uso de `private final` em dependências recebidas por injeção via construtor.
+- Uma dependência `final` recebe sua referência durante a construção do objeto e não pode ser substituída posteriormente.
+- Alinhamento entre o contrato HTTP e o limite definido no banco utilizando `@Size(max = 100)` e `VARCHAR(100)`.
+- Reutilização de exceções existentes quando a mesma regra de negócio aparece em outro domínio.
+- Nem toda ausência de uma chave única de negócio deve ser resolvida criando uma restrição artificial.
+- Nomes de pessoas não são identificadores confiáveis de unicidade.
+
+### Principais decisões arquiteturais
+
+- Um Morador deve obrigatoriamente estar associado a um Apartamento.
+- Manter inicialmente o relacionamento unidirecional de `Morador` para `Apartamento`.
+- Utilizar `FetchType.LAZY` no relacionamento.
+- Não utilizar `nome` como campo `UNIQUE`.
+- Permitir moradores com nomes iguais, inclusive no mesmo apartamento, enquanto não existir um identificador de negócio adequado.
+- Não criar uma regra `UNIQUE(apartamento_id, nome)` apenas para impedir cadastros acidentais.
+- Registrar como evolução futura uma estratégia para impedir submissões duplicadas sem bloquear moradores legítimos com o mesmo nome.
+- Manter inicialmente no `MoradorResponseDTO` apenas os dados do morador e do apartamento, sem incluir informações do bloco sem uma necessidade concreta.
+- Manter as migrations já executadas imutáveis; alterações futuras da estrutura deverão ser realizadas em novas migrations.
