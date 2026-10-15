@@ -370,6 +370,15 @@ Iniciar o domínio de moradores, relacionando cada morador a um apartamento exis
 - Criação do endpoint `POST /moradores`.
 - Retorno HTTP `201 Created`.
 - Testes dos primeiros cenários utilizando Postman.
+  Implementação do endpoint GET /moradores.
+- Conversão de List<Morador> para List<MoradorResponseDTO> utilizando stream(), map() e toList().
+- Retorno HTTP 200 OK com lista vazia quando não existem moradores cadastrados.
+- Implementação do endpoint GET /moradores/{id}.
+- Consulta por identificador utilizando findById(), Optional e orElseThrow().
+- Criação da MoradorNaoEncontradoException.
+- Tratamento centralizado de morador inexistente no GlobalExceptionHandler.
+- Retorno HTTP 404 Not Found para consultas de moradores inexistentes.
+- Validação dos cenários de sucesso e erro utilizando Postman.
 
 ### Principais aprendizados
 
@@ -384,6 +393,15 @@ Iniciar o domínio de moradores, relacionando cada morador a um apartamento exis
 - Reutilização de exceções existentes quando a mesma regra de negócio aparece em outro domínio.
 - Nem toda ausência de uma chave única de negócio deve ser resolvida criando uma restrição artificial.
 - Nomes de pessoas não são identificadores confiáveis de unicidade.
+- Uso de stream() para percorrer os elementos de uma coleção.
+- Uso de map() para transformar cada entidade Morador em um MoradorResponseDTO.
+- Uso de toList() para reunir os elementos transformados em uma lista.
+- Diferença entre uma lista vazia e uma exceção.
+- Comportamento de findAll() quando não existem registros.
+- Reutilização de findById(), Optional e orElseThrow() em um novo domínio.
+- Uso de @PathVariable para receber o identificador informado na URL.
+- Tratamento de exceções específicas de domínio com @ExceptionHandler.
+- Reutilização do método criarRespostaErro() para manter o padrão de resposta da API.
 
 ### Principais decisões arquiteturais
 
@@ -396,3 +414,8 @@ Iniciar o domínio de moradores, relacionando cada morador a um apartamento exis
 - Registrar como evolução futura uma estratégia para impedir submissões duplicadas sem bloquear moradores legítimos com o mesmo nome.
 - Manter inicialmente no `MoradorResponseDTO` apenas os dados do morador e do apartamento, sem incluir informações do bloco sem uma necessidade concreta.
 - Manter as migrations já executadas imutáveis; alterações futuras da estrutura deverão ser realizadas em novas migrations.
+- Manter a conversão de entidades para DTOs na camada Service, sem expor diretamente as entidades JPA pela API.
+- Retornar 200 OK com uma lista vazia nas consultas de coleção sem resultados.
+- Utilizar uma exceção específica para representar a ausência de um morador identificado pelo ID.
+- Manter o tratamento de erros centralizado no GlobalExceptionHandler, reutilizando o formato ApiError.
+- Retornar 200 OK para consultas individuais bem-sucedidas e 404 Not Found quando o recurso solicitado não existe.

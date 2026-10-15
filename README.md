@@ -65,12 +65,20 @@ exception/
 ├── CampoErro.java
 ├── GlobalExceptionHandler.java
 ├── BlocoPossuiApartamentosException.java
-└── ApartamentoNaoEncontradoException.java
+├── ApartamentoNaoEncontradoException.java
+└── MoradorNaoEncontradoException.java
 
 config/
 ├── OpenApiConfig.java
 
 morador/
+├── dto/
+│   ├── CadastrarMoradorDTO.java
+│   └── MoradorResponseDTO.java
+├── Morador.java
+├── MoradorController.java
+├── MoradorRepository.java
+└── MoradorService.java
 encomenda/
 historico/
 ```
@@ -184,6 +192,20 @@ Restrições adicionais:
 - A combinação `(bloco_id, numero)` é única.
 - O mesmo número de apartamento pode existir em blocos diferentes.
 - O mesmo número não pode se repetir dentro do mesmo bloco.
+
+### morador
+
+| Campo | Tipo | Restrições |
+|---|---|---|
+| id | BIGINT | PRIMARY KEY, IDENTITY |
+| nome | VARCHAR(100) | NOT NULL |
+| apartamento_id | BIGINT | NOT NULL, FOREIGN KEY |
+
+Restrições adicionais:
+
+- `apartamento_id` referencia `apartamento(id)`.
+- Todo morador deve estar associado a um apartamento existente.
+- A tabela foi criada pela migration `V3__create_table_morador.sql`.
 ---
 
 # ▶️ Como executar o projeto
@@ -433,10 +455,16 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 - [x] Retorno HTTP 201 Created
 - [x] Validação de apartamento inexistente
 - [x] Testes iniciais utilizando Postman
-- [ ] Listagem de moradores
-- [ ] Consulta de morador por ID
+- [x] Endpoint GET /moradores
+- [x] Conversão de entidades Morador para MoradorResponseDTO utilizando `stream()`, `map()` e `toList()`
+- [x] Retorno HTTP 200 OK com lista vazia quando não existem moradores
+- [x] Endpoint GET /moradores/{id}
+- [x] Criação da MoradorNaoEncontradoException
+- [x] Tratamento de morador inexistente com HTTP 404 Not Found
+- [x] Testes dos endpoints utilizando Postman
 - [ ] Atualização de morador
 - [ ] Exclusão de morador
+
 ## Próximas Sprints
 
 - [ ] Encomendas
@@ -469,7 +497,8 @@ Se o terminal solicitar confirmação para finalizar o processo, confirme a oper
 ## Moradores
 
 - [x] Cadastro
-- [ ] Consulta
+- [x] Consulta por ID
+- [x] Listagem
 - [ ] Atualização
 - [ ] Exclusão
 
@@ -504,7 +533,7 @@ O histórico detalhado de evolução do projeto, decisões técnicas e principai
 - [ ] Gerar etiqueta de encomenda com QR Code para facilitar identificação e busca pela portaria.
 - [ ] Adicionar exemplos personalizados de respostas no Swagger/OpenAPI.
 - [ ] Tornar explícito o mapeamento da FK `bloco_id` em `Apartamento` com `@JoinColumn`.
-- [ ] Avaliar estratégia para evitar cadastros acidentais duplicados de moradores sem impedir pessoas diferentes com o mesmo nome. `@JoinColumn`.
+- [ ] Avaliar estratégia para evitar cadastros acidentais duplicados de moradores sem impedir pessoas diferentes com o mesmo nome.
 ---
 
 # 👨‍💻 Autor
