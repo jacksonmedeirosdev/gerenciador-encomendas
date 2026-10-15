@@ -166,6 +166,19 @@ public class GlobalExceptionHandler {
 
     }
 
+    @ExceptionHandler(MoradorNaoEncontradoException.class)
+    public ResponseEntity<ApiError> tratarMoradorNaoEncontrado(
+            MoradorNaoEncontradoException exception,
+            HttpServletRequest request
+    ){
+        return criarRespostaErro(
+                HttpStatus.NOT_FOUND,
+                exception.getMessage(),
+                request,
+                List.of()
+        );
+    }
+
     private ResponseEntity<ApiError> criarRespostaErro(
             HttpStatus status,
             String mensagem,

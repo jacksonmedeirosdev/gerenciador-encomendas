@@ -4,10 +4,10 @@ package br.com.jjnervosia.gerenciador_encomendas.morador;
 import br.com.jjnervosia.gerenciador_encomendas.apartamento.Apartamento;
 import br.com.jjnervosia.gerenciador_encomendas.apartamento.ApartamentoRepository;
 import br.com.jjnervosia.gerenciador_encomendas.exception.ApartamentoNaoEncontradoException;
+import br.com.jjnervosia.gerenciador_encomendas.exception.MoradorNaoEncontradoException;
 import br.com.jjnervosia.gerenciador_encomendas.morador.dto.MoradorResponseDTO;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -42,5 +42,15 @@ public class MoradorService {
                         morador.getApartamento().getNumero()
                 )).toList();
 
+    }
+
+    public MoradorResponseDTO buscarPorId(Long id) {
+        Morador morador = moradorRepository.findById(id).orElseThrow(() -> new MoradorNaoEncontradoException(id));
+        return new MoradorResponseDTO(
+                morador.getId(),
+                morador.getNome(),
+                morador.getApartamento().getId(),
+                morador.getApartamento().getNumero()
+        );
     }
 }

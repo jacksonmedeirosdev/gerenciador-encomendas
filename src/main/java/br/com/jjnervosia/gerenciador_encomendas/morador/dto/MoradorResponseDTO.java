@@ -6,6 +6,7 @@ public record MoradorResponseDTO(
         Long apartamentoId,
         String apartamentoNumero
 
+
 ) {
 
 }

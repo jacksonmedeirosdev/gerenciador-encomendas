@@ -29,4 +29,10 @@ public class MoradorController {
         List<MoradorResponseDTO> moradores = moradorService.listar();
         return ResponseEntity.status(HttpStatus.OK).body(moradores);
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<MoradorResponseDTO> buscarPorId(@PathVariable Long id){
+        MoradorResponseDTO moradorResponseDTO = moradorService.buscarPorId(id);
+        return ResponseEntity.status(HttpStatus.OK).body(moradorResponseDTO);
+    }
 }
